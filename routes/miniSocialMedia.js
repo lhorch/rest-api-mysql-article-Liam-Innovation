@@ -2,42 +2,43 @@ const express = require("express");
 const router = express.Router();
 const queries = require("../services/queries");
 
-/* GET programming languages. */
-router.get("/", async function (req, res, next) {
+/* GET all users */
+router.get("/Users", async function (req, res, next) {
   try {
-    res.json(await queries.getMultiple(req.query.page));
+    res.json(await queries.getUsers());
   } catch (err) {
-    console.error(`Error while getting programming languages `, err.message);
+    console.error(`Error while getting users`, err.message);
     next(err);
   }
 });
 
-/* POST programming language */
-router.post("/", async function (req, res, next) {
+/* POST a user */
+router.post("/User", async function (req, res, next) {
+  console.log(req.body);
   try {
-    res.json(await queries.create(req.body));
+    res.json(await queries.createUser(req.body));
   } catch (err) {
-    console.error(`Error while creating programming language`, err.message);
+    console.error(`Error while creating user`, err.message);
     next(err);
   }
 });
 
-/* PUT programming language */
-router.put("/:id", async function (req, res, next) {
+/* GET all posts */
+router.get("/Posts", async function (req, res, next) {
   try {
-    res.json(await queries.update(req.params.id, req.body));
+    res.json(await queries.getPosts());
   } catch (err) {
-    console.error(`Error while updating programming language`, err.message);
+    console.error(`Error while getting posts`, err.message);
     next(err);
   }
 });
 
-/* DELETE programming language */
-router.delete("/:id", async function (req, res, next) {
+/* POST a post */
+router.post("/Post", async function (req, res, next) {
   try {
-    res.json(await queries.remove(req.params.id));
+    res.json(await queries.createPost(req.body));
   } catch (err) {
-    console.error(`Error while deleting programming language`, err.message);
+    console.error(`Error while creating post`, err.message);
     next(err);
   }
 });
