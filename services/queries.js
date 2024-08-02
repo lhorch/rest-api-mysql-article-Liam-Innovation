@@ -11,12 +11,18 @@ async function getUsers() {
   return data;
 }
 
-async function getPosts() {
+async function getPosts(page = 0) {
+  let x = page * 10
+  console.log("About to query for posts");
   const rows = await db.query(
-    `SELECT * FROM Posts`
+    `SELECT * FROM Posts 
+    ORDER BY postId DESC
+    LIMIT ${x}, 10`
   );
+  console.log("Queried for posts!");
   const data = helper.emptyOrRows(rows);
 
+  console.log(data);
   return data;
 }
 
@@ -31,9 +37,10 @@ async function createUser(user) {
   let message = "Error in creating new user";
 
   if (result.affectedRows) {
-    message = await db.query(
-      `SELECT userId FROM Users WHERE username="${user.username}"`
-    );
+    message = { username: user.username };
+    // message = await db.query(
+    //   `SELECT userId FROM Users WHERE username="${user.username}"`
+    // );
   }
 
   return message;
@@ -42,9 +49,9 @@ async function createUser(user) {
 async function createPost(post) {
   const result = await db.query(
     `INSERT INTO Posts 
-    (userId, message)
+    (username, message, createdAt)
     VALUES 
-    (${post.userId}, "${post.message}")`
+    ("${post.username}", "${post.message}", CURTIME())`
   );
 
   let message = "Error in creating new post";

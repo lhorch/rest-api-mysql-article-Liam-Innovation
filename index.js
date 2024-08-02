@@ -1,8 +1,10 @@
 const express = require("express");
+const dotenv = require("dotenv");
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const miniSocialMediaRouter = require("./routes/miniSocialMedia");
 
+dotenv.config();
 app.use(express.json());
 app.use(
   express.urlencoded({
@@ -26,5 +28,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`Example app listening at port ${port}`);
 });

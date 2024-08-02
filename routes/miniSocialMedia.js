@@ -24,9 +24,10 @@ router.post("/User", async function (req, res, next) {
 });
 
 /* GET all posts */
-router.get("/Posts", async function (req, res, next) {
+router.get("/Posts/:page", async function (req, res, next) {
   try {
-    res.json(await queries.getPosts());
+    console.log("Get Posts ", req.params.page);
+    res.json(await queries.getPosts(req.params.page));
   } catch (err) {
     console.error(`Error while getting posts`, err.message);
     next(err);

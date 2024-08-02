@@ -1,0 +1,9 @@
+runtime: nodejs16
+
+env_variables:
+  INSTANCE_HOST: 34.86.245.108
+  SOCKET_PATH: /cloudsql/minisocialmedia:us-east4:mymysql
+  DB_PORT: 3306
+  DB_USER: root
+  DB_PASS: Catsanddogs12!
+  DB_NAME: sns
